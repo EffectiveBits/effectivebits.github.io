@@ -1,4 +1,4 @@
-name: Build and deploy angular app
+name: angular-build-deploy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  angular-build-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,12 +16,12 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.4.x'
+          node-version: $
           cache: 'npm'
-          cache-dependency-path: ./package.json
+          cache-dependency-path: package.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build angular app
         run: ng build --output-path docs --base-href /effectivebits/
