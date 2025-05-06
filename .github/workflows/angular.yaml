@@ -1,0 +1,32 @@
+name: Build and deploy angular app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build angular app
+        run: ng build --output-path docs --base-href /effectivebits/
+
+      - name: Commit build
+        run: |
+          git config --global user.name 'Francesco Papagno'
+          git config --global user.email 'papagno@gmail.com'
+          git commit -am "Angular build"
+          git push
